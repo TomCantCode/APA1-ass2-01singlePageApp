@@ -54,18 +54,30 @@ app.get('/add-recipe', (req, res) => {
 
 // Route to display a single recipe
 app.get('/recipe/:index', (req, res) => {
-  const index = req.params.index;
-  const recipe = recipes[index];
-  res.render('recipe', { recipe: recipe, index: index });
+  const index = parseInt(req.params.index, 10);
+  if (index >= 0 && index < recipes.length) {
+    const recipe = recipes[index];
+    res.render('recipe', { recipe: recipe, index: index });
+  } else {
+    res.status(404).send('Recipe not found');
+  }
 });
 
 // Route to handle the form submission and add a new recipe
 app.post('/add-recipe', (req, res) => {
+  const { name, ingredients, instructions } = req.body;
+
+  if (!name || !ingredients || !instructions) {
+    return res.status(400)
+      .send('Name, ingredients, and instructions are required.');
+  }
+
   const newRecipe = {
-    name: req.body.name.toUpperCase(),
-    ingredients: req.body.ingredients.split('\n').map(capitaliseSentence),
-    instructions: req.body.instructions.split('\n').map(capitaliseSentence)
+    name: name.toUpperCase(),
+    ingredients: ingredients.split('\n').map(capitaliseSentence),
+    instructions: instructions.split('\n').map(capitaliseSentence)
   };
+
   recipes.push(newRecipe);
   res.redirect('/');
 });
@@ -73,8 +85,12 @@ app.post('/add-recipe', (req, res) => {
 // Route to handle the form submission and remove a recipe
 app.post('/remove-recipe', (req, res) => {
   const index = parseInt(req.body.index, 10);
-  recipes.splice(index, 1);
-  res.redirect('/');
+  if (index >= 0 && index < recipes.length) {
+    recipes.splice(index, 1);
+    res.redirect('/');
+  } else {
+    res.status(400).send('Invalid recipe index');
+  }
 });
 
 // Start the server
