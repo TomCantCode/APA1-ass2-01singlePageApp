@@ -10,7 +10,8 @@ html(lang="en")
     .container
       a.navlink(href="/add-recipe") Add Recipe
       if recipes.length === 0
-        p No recipes available!
+        section
+          h1 No recipes available!
       else
         each recipe in recipes
           .recipe

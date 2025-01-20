@@ -106,6 +106,10 @@ body {
     background-color: red;
     cursor: pointer;
   }
+
+  .remove:hover {
+    background-color: darkred;
+  }
   
   .viewRecipe {
     padding: 10px 20px;

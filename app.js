@@ -62,16 +62,15 @@ app.get('/recipe/:index', (req, res) => {
 // Route to handle the form submission and add a new recipe
 app.post('/add-recipe', (req, res) => {
   const newRecipe = {
-    name: req.body.name,
-    ingredients: req.body.ingredients.split('\n'),
-    instructions: req.body.instructions.split('\n')
+    name: req.body.name.toUpperCase(),
+    ingredients: req.body.ingredients.split('\n').map(capitaliseSentence),
+    instructions: req.body.instructions.split('\n').map(capitaliseSentence)
   };
   recipes.push(newRecipe);
   res.redirect('/');
 });
 
 // Route to handle the form submission and remove a recipe
-// TO-DO Fix the bug that causes the wrong recipe to be removed
 app.post('/remove-recipe', (req, res) => {
   const index = parseInt(req.body.index, 10);
   recipes.splice(index, 1);
@@ -82,3 +81,7 @@ app.post('/remove-recipe', (req, res) => {
 app.listen(port, () => {
   console.log(`Recipe app listening at http://localhost:${port}`);
 });
+
+function capitaliseSentence (sentence) {
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+};
