@@ -107,3 +107,15 @@ body {
     cursor: pointer;
   }
   
+  .viewRecipe {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    float: right;
+  }

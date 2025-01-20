@@ -52,6 +52,13 @@ app.get('/add-recipe', (req, res) => {
   res.render('add-recipe');
 });
 
+// Route to display a single recipe
+app.get('/recipe/:index', (req, res) => {
+  const index = req.params.index;
+  const recipe = recipes[index];
+  res.render('recipe', { recipe: recipe, index: index });
+});
+
 // Route to handle the form submission and add a new recipe
 app.post('/add-recipe', (req, res) => {
   const newRecipe = {
@@ -63,9 +70,10 @@ app.post('/add-recipe', (req, res) => {
   res.redirect('/');
 });
 
+// Route to handle the form submission and remove a recipe
+// TO-DO Fix the bug that causes the wrong recipe to be removed
 app.post('/remove-recipe', (req, res) => {
-  const index = req.body.index;
-  console.log(index);
+  const index = parseInt(req.body.index, 10);
   recipes.splice(index, 1);
   res.redirect('/');
 });

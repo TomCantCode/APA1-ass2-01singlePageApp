@@ -10,12 +10,12 @@ html(lang="en")
     .container
       a.navlink(href="/add-recipe") Add Recipe
       if recipes.length === 0
-        p No recipes available
+        p No recipes available!
       else
         each recipe in recipes
           .recipe
+            a.viewRecipe(href=`/recipe/${recipes.indexOf(recipe)}`) View Recipe
             h1= recipe.name
-            
             section
               h2 Ingredients
               ul

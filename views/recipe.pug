@@ -1,0 +1,31 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Recipes
+    link(rel="stylesheet", href="/styles.css")
+
+  body
+    .container
+      a.navlink(href="/") View Recipes
+      .recipe
+        h1= recipe.name
+        
+        section
+          h2 Ingredients
+          ul
+            each ingredient in recipe.ingredients
+              li= ingredient
+
+        section
+          h2 Instructions
+          ol
+            each instruction in recipe.instructions
+              li= instruction
+
+        section
+          form(action="/remove-recipe", method="POST")
+            input(type="hidden", name="index", value=index)
+            button.remove(type="submit") Remove Recipe
+
